@@ -5,23 +5,39 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Checkbox } from "@mui/material";
 import { FavoriteBorder, Favorite } from "@mui/icons-material";
-import { Button, CardActionArea, CardActions } from "@mui/material";
+import { CardActionArea, CardActions } from "@mui/material";
+import styled from "@emotion/styled";
+import { useNavigate } from "react-router-dom";
 
-const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+const StyledCard = styled(Card)`
+  max-width: 345px;
+`;
+
+const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 export const CoctailItem: React.FC<{
   coctailTitle: string;
   coctailDesc: string;
   coctailImg: string;
+  coctailId: string;
 }> = (props) => {
+  const navigate = useNavigate();
+
+  const navigateTo = (id: string) => {
+    navigate(`/${id}`);
+  };
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <StyledCard
+      onClick={() => {
+        navigateTo(props.coctailId);
+      }}
+    >
       <CardActionArea>
         <CardMedia
           component="img"
           height="140"
           image={props.coctailImg}
-          alt="green iguana"
+          alt="coctail image"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
@@ -33,8 +49,12 @@ export const CoctailItem: React.FC<{
         </CardContent>
       </CardActionArea>
       <CardActions>
-      <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
+        <Checkbox
+          {...label}
+          icon={<FavoriteBorder />}
+          checkedIcon={<Favorite />}
+        />
       </CardActions>
-    </Card>
+    </StyledCard>
   );
 };
