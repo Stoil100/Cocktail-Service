@@ -1,39 +1,39 @@
-import React, { createContext, useState } from 'react';
+import React,{ useState, useEffect, createContext, ReactNode} from "react";
 
-interface FavouritesContextType {
+type FavouritesContextType = {
   favourites: string[];
-  addFavourite: (item: string) => void;
-  removeFavourite: (item: string) => void;
-}
+  toggleFavourite: (coctailId: string) => void;
+};
+
+type Props = {
+  children: ReactNode;
+};
 
 export const FavouritesContext = createContext<FavouritesContextType>({
   favourites: [],
-  addFavourite: () => {},
-  removeFavourite: () => {},
+  toggleFavourite: () => {},
 });
 
-const FavouritesContextProvider: React.FC = (props) => {
-  const [favourites, setFavourites] = useState<string[]>([]);
+export const FavouritesProvider = ({ children }: Props) => {
+  const [favourites, setFavourites] = useState<string[]>(
+    JSON.parse(localStorage.getItem("favourites") ?? "[]")
+  );
 
-  const addFavourite = (item: string) => {
-    if (!favourites.includes(item)) {
-      setFavourites([...favourites, item]);
+  useEffect(() => {
+    localStorage.setItem("favourites", JSON.stringify(favourites));
+  }, [favourites]);
+
+  const toggleFavourite = (coctailId: string) => {
+    if (favourites.includes(coctailId)) {
+      setFavourites(favourites.filter((id) => id !== coctailId));
+    } else {
+      setFavourites([...favourites, coctailId]);
     }
   };
 
-  const removeFavourite = (item: string) => {
-    setFavourites(favourites.filter((f) => f !== item));
-  };
-
-  const contextValue: FavouritesContextType = {
-    favourites,
-    addFavourite,
-    removeFavourite,
-  };
-
   return (
-    <FavouritesContext.Provider value={contextValue}>
+    <FavouritesContext.Provider value={{ favourites, toggleFavourite }}>
+      {children}
     </FavouritesContext.Provider>
   );
 };
-

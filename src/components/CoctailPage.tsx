@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -9,6 +9,7 @@ import { CardActionArea, CardActions } from "@mui/material";
 import styled from "@emotion/styled";
 import { useParams } from "react-router-dom";
 import { Coctail } from "../models/coctail";
+import { FavouritesContext } from "../context";
 
 const StyledCard = styled(Card)`
   max-width: 345px;
@@ -19,8 +20,9 @@ const label = { inputProps: { "aria-label": "Checkbox demo" } };
 export const CoctailPage: React.FC<{}> = () => {
   const [coctail, setCoctail] = useState<Coctail>();
   const id = useParams();
-  console.log(id.coctailId);
-
+  const { favourites, toggleFavourite } = useContext(FavouritesContext);
+  const isFavourited = favourites.includes(id.coctailId!);
+  
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
@@ -31,6 +33,10 @@ export const CoctailPage: React.FC<{}> = () => {
     }
     fetchData();
   }, []);
+
+  const handleFavouriteChange = () => {
+    toggleFavourite(id.coctailId!);
+  };
 
   return (
     <StyledCard>
@@ -52,9 +58,11 @@ export const CoctailPage: React.FC<{}> = () => {
       </CardActionArea>
       <CardActions>
         <Checkbox
-          {...label}
-          icon={<FavoriteBorder />}
-          checkedIcon={<Favorite />}
+           {...label}
+           icon={<FavoriteBorder />}
+           checkedIcon={<Favorite />}
+           checked={isFavourited}
+           onChange={handleFavouriteChange}
         />
       </CardActions>
     </StyledCard>

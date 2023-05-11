@@ -1,4 +1,4 @@
-import React from "react";
+import React,{ useState, useContext } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -8,6 +8,7 @@ import { FavoriteBorder, Favorite } from "@mui/icons-material";
 import { CardActionArea, CardActions } from "@mui/material";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
+import { FavouritesContext } from "../context";
 
 const StyledCard = styled(Card)`
   max-width: 345px;
@@ -22,17 +23,20 @@ export const CoctailItem: React.FC<{
   coctailId: string;
 }> = (props) => {
   const navigate = useNavigate();
+  const { favourites, toggleFavourite } = useContext(FavouritesContext);
+  const isFavourited = favourites.includes(props.coctailId);
 
-  const navigateTo = (id: string) => {
-    navigate(`/${id}`);
+  const navigateTo = () => {
+    navigate(`/${props.coctailId}`);
   };
+
+  const handleFavouriteChange = () => {
+    toggleFavourite(props.coctailId);
+  };
+
   return (
-    <StyledCard
-      onClick={() => {
-        navigateTo(props.coctailId);
-      }}
-    >
-      <CardActionArea>
+    <StyledCard>
+      <CardActionArea onClick={navigateTo}>
         <CardMedia
           component="img"
           height="140"
@@ -53,6 +57,8 @@ export const CoctailItem: React.FC<{
           {...label}
           icon={<FavoriteBorder />}
           checkedIcon={<Favorite />}
+          checked={isFavourited}
+          onChange={handleFavouriteChange}
         />
       </CardActions>
     </StyledCard>
