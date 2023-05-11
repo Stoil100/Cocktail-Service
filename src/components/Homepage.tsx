@@ -15,11 +15,10 @@ export const CocktailList: React.FC = () => {
         `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=`
       );
       const data = await response.json();
-      console.log(data);
       setCoctails(data.drinks);
     }
     fetchData();
-  }, [searchTerm]);
+  }, []);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);

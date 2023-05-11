@@ -4,6 +4,7 @@ import { CoctailItem } from "./components/CoctailItem";
 import RootLayout from "./components/Root";
 import { createBrowserRouter, Router, RouterProvider } from "react-router-dom";
 import { CoctailPage } from "./components/CoctailPage";
+import { FavouritedPage } from "./components/FavouredPage";
 
 function App() {
   const[todos,setTodos]=useState<[]>();
@@ -12,7 +13,7 @@ function App() {
       path: "/",
       element: <RootLayout />,
       children: [
-        { path: "/", element: <CocktailList/> },
+        { path: "/", element: <FavouritedPage/> },
         { path: "/:coctailId", element: <CoctailPage/> },
       ],
     },
