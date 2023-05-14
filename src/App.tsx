@@ -1,9 +1,9 @@
 import React,{useState,useEffect} from "react";
-import { CocktailList } from "./components/Homepage";
-import { CoctailItem } from "./components/CoctailItem";
+import { Homepage } from "./components/Homepage";
+import { CocktailItem } from "./components/CocktailItem";
 import RootLayout from "./components/Root";
 import { createBrowserRouter, Router, RouterProvider } from "react-router-dom";
-import { CoctailPage } from "./components/CoctailPage";
+import { CocktailPage } from "./components/CocktailPage";
 import { FavouritedPage } from "./components/FavouredPage";
 
 function App() {
@@ -13,8 +13,8 @@ function App() {
       path: "/",
       element: <RootLayout />,
       children: [
-        { path: "/", element: <FavouritedPage/> },
-        { path: "/:coctailId", element: <CoctailPage/> },
+        { path: "/", element: <Homepage/> },
+        { path: "/:cocktailId", element: <CocktailPage/> },
       ],
     },
   ]);

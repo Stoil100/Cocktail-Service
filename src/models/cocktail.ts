@@ -1,6 +1,6 @@
-export type Coctails=Coctail[];
+export type Cocktails=Cocktail[];
 
-export interface Coctail {
+export interface Cocktail {
     idDrink: string;
     strDrink: string;
     strInstructions: string;

@@ -2,7 +2,7 @@ import React,{ useState, useEffect, createContext, ReactNode} from "react";
 
 type FavouritesContextType = {
   favourites: string[];
-  toggleFavourite: (coctailId: string) => void;
+  toggleFavourite: (cocktailId: string) => void;
 };
 
 type Props = {
@@ -23,11 +23,11 @@ export const FavouritesProvider = ({ children }: Props) => {
     localStorage.setItem("favourites", JSON.stringify(favourites));
   }, [favourites]);
 
-  const toggleFavourite = (coctailId: string) => {
-    if (favourites.includes(coctailId)) {
-      setFavourites(favourites.filter((id) => id !== coctailId));
+  const toggleFavourite = (cocktailId: string) => {
+    if (favourites.includes(cocktailId)) {
+      setFavourites(favourites.filter((id) => id !== cocktailId));
     } else {
-      setFavourites([...favourites, coctailId]);
+      setFavourites([...favourites, cocktailId]);
     }
   };
 

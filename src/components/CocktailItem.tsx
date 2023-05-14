@@ -9,6 +9,7 @@ import { CardActionArea, CardActions } from "@mui/material";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
 import { FavouritesContext } from "../context";
+import { Cocktail } from "../models/cocktail";
 
 const StyledCard = styled(Card)`
   max-width: 345px;
@@ -16,22 +17,17 @@ const StyledCard = styled(Card)`
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
-export const CoctailItem: React.FC<{
-  coctailTitle: string;
-  coctailDesc: string;
-  coctailImg: string;
-  coctailId: string;
-}> = (props) => {
+export const CocktailItem = (props: {cocktail: Cocktail}) => {
   const navigate = useNavigate();
   const { favourites, toggleFavourite } = useContext(FavouritesContext);
-  const isFavourited = favourites.includes(props.coctailId);
+  const isFavourited = favourites.includes(props.cocktail.idDrink);
 
   const navigateTo = () => {
-    navigate(`/${props.coctailId}`);
+    navigate(`/${props.cocktail.idDrink}`);
   };
 
   const handleFavouriteChange = () => {
-    toggleFavourite(props.coctailId);
+    toggleFavourite(props.cocktail.idDrink);
   };
 
   return (
@@ -40,15 +36,15 @@ export const CoctailItem: React.FC<{
         <CardMedia
           component="img"
           height="140"
-          image={props.coctailImg}
-          alt="coctail image"
+          image={props.cocktail.strDrinkThumb}
+          alt="cocktail image"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {props.coctailTitle}
+            {props.cocktail.strDrink}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {props.coctailDesc}
+            {props.cocktail.strInstructions}
           </Typography>
         </CardContent>
       </CardActionArea>

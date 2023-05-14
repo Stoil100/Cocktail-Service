@@ -1,35 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { CoctailItem } from "./CoctailItem";
-import { Coctails, Coctail } from "../models/coctail";
+import { CocktailItem } from "./CocktailItem";
+import { Cocktails, Cocktail } from "../models/cocktail";
 import { Backdrop, Button } from "@mui/material";
 
-export const CocktailList: React.FC = () => {
-  const [coctails, setCoctails] = useState<Coctails>();
+export const Homepage: React.FC = () => {
+  const [cocktails, setCocktails] = useState<Cocktails>();
   const [searchTerm, setSearchTerm] = useState<string | null>("");
-  const [randomCocktail, setRandomCocktail] = useState<Coctail>();
+  const [randomCocktail, setRandomCocktail] = useState<Cocktail>();
   const [isCocktailDisplayed, setIsCocktailDisplayed] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(
-        `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=`
-      );
-      const data = await response.json();
-      setCoctails(data.drinks);
+      const data = await fetch(
+        `https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Alcoholic`
+      ).then(response => response.json());
+      setCocktails(data.drinks);
     }
     fetchData();
-  }, []);
+  }, [searchTerm]);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
 
   const handleGetRandomCocktail = async () => {
-    const response = await fetch(
+    const data = await fetch(
       "https://www.thecocktaildb.com/api/json/v1/1/random.php"
-    );
-    const data = await response.json();
-    console.log(data);
+    ).then(response => response.json());
     setRandomCocktail(data.drinks[0]);
     setIsCocktailDisplayed(true);
   };
@@ -54,25 +51,19 @@ export const CocktailList: React.FC = () => {
             setIsCocktailDisplayed(false);
           }}
         >
-          <CoctailItem
+          <CocktailItem
             key={randomCocktail!.idDrink}
-            coctailTitle={randomCocktail!.strDrink}
-            coctailDesc={randomCocktail!.strInstructions}
-            coctailImg={randomCocktail!.strDrinkThumb}
-            coctailId={randomCocktail!.idDrink}
+            cocktail={randomCocktail!}
           />
         </Backdrop>
       )}
 
-      {coctails &&
-        coctails.map((coctail) => (
-          <CoctailItem
-            key={coctail.idDrink}
-            coctailTitle={coctail.strDrink}
-            coctailDesc={coctail.strInstructions}
-            coctailImg={coctail.strDrinkThumb}
-            coctailId={coctail.idDrink}
-          />
+      {cocktails &&
+        cocktails.map((cocktail) => (
+          <CocktailItem
+          key={cocktail.idDrink}
+          cocktail={cocktail}
+        />
         ))}
     </div>
   );

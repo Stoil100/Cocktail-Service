@@ -8,7 +8,7 @@ import { FavoriteBorder, Favorite } from "@mui/icons-material";
 import { CardActionArea, CardActions } from "@mui/material";
 import styled from "@emotion/styled";
 import { useParams } from "react-router-dom";
-import { Coctail } from "../models/coctail";
+import { Cocktail } from "../models/cocktail";
 import { FavouritesContext } from "../context";
 
 const StyledCard = styled(Card)`
@@ -17,25 +17,25 @@ const StyledCard = styled(Card)`
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
-export const CoctailPage: React.FC<{}> = () => {
-  const [coctail, setCoctail] = useState<Coctail>();
+export const CocktailPage: React.FC<{}> = () => {
+  const [cocktail, setCocktail] = useState<Cocktail>();
   const id = useParams();
   const { favourites, toggleFavourite } = useContext(FavouritesContext);
-  const isFavourited = favourites.includes(id.coctailId!);
+  const isFavourited = favourites.includes(id.cocktailId!);
   
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
-        `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id.coctailId}`
+        `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id.cocktailId}`
       );
       const data = await response.json();
-      setCoctail(data.drinks[0]);
+      setCocktail(data.drinks[0]);
     }
     fetchData();
   }, []);
 
   const handleFavouriteChange = () => {
-    toggleFavourite(id.coctailId!);
+    toggleFavourite(id.cocktailId!);
   };
 
   return (
@@ -44,15 +44,15 @@ export const CoctailPage: React.FC<{}> = () => {
         <CardMedia
           component="img"
           height="140"
-          image={coctail?.strDrinkThumb}
-          alt="coctail image"
+          image={cocktail?.strDrinkThumb}
+          alt="cocktail image"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {coctail?.strDrink}
+            {cocktail?.strDrink}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {coctail?.strInstructions}
+            {cocktail?.strInstructions}
           </Typography>
         </CardContent>
       </CardActionArea>
