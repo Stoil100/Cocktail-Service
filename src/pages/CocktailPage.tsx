@@ -1,23 +1,42 @@
 import React, { useState, useEffect, useContext } from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import { Checkbox } from "@mui/material";
+import { Checkbox, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
 import { FavoriteBorder, Favorite } from "@mui/icons-material";
-import { CardActionArea, CardActions } from "@mui/material";
 import styled from "@emotion/styled";
 import { useParams } from "react-router-dom";
 import { Cocktail } from "../models/cocktail";
 import { FavouritesContext } from "../context";
 
 const StyledCard = styled(Card)`
-  max-width: 345px;
+  width:100%;
+  border-radius:0;
+`;
+
+const Container = styled.div`
+  width:100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+`;
+
+const Image = styled(CardMedia)`
+  height:500px;
+`;
+
+const Title = styled(Typography)`
+  font-weight: bold;
+  font-size: 2.5rem;
+  text-align: center;
+`;
+
+const Description = styled(Typography)`
+  font-size: 1.2rem;
+  text-align: center;
 `;
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
-export const CocktailPage: React.FC<{}> = () => {
+export const CocktailPage = () => {
   const [cocktail, setCocktail] = useState<Cocktail>();
   const id = useParams();
   const { favourites, toggleFavourite } = useContext(FavouritesContext);
@@ -39,32 +58,28 @@ export const CocktailPage: React.FC<{}> = () => {
   };
 
   return (
-    <StyledCard>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="140"
-          image={cocktail?.strDrinkThumb}
-          alt="cocktail image"
-        />
+    <Container>
+      <StyledCard>
+        <CardActionArea>
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {cocktail?.strDrink}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {cocktail?.strInstructions}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Checkbox
-           {...label}
-           icon={<FavoriteBorder />}
-           checkedIcon={<Favorite color="secondary"/>}
-           checked={isFavourited}
-           onChange={handleFavouriteChange}
-        />
-      </CardActions>
-    </StyledCard>
+            <Title variant="h5" >
+              {cocktail?.strDrink}
+            </Title>
+            <Description variant="body2" color="text.secondary">
+              {cocktail?.strInstructions}
+            </Description>
+          </CardContent>
+          <Image  image={cocktail?.strDrinkThumb} />
+        </CardActionArea>
+        <CardActions>
+          <Checkbox
+            icon={<FavoriteBorder />}
+            checkedIcon={<Favorite color="secondary" />}
+            checked={isFavourited}
+            onChange={handleFavouriteChange}
+          />
+        </CardActions>
+      </StyledCard>
+    </Container>
   );
 };

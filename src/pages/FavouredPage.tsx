@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Cocktails } from "../models/cocktail";
 import { CocktailItem } from "../components/CocktailItem";
+import { Grid } from "@mui/material";
 
-export const FavouritedPage: React.FC = () => {
+export const FavouritedPage= () => {
   const [cocktails, setCocktails] = useState<Cocktails>();
   const [favourites, setFavourites] = useState<string[]>(
     JSON.parse(localStorage.getItem("favourites") ?? "[]")
@@ -20,14 +21,14 @@ export const FavouritedPage: React.FC = () => {
   }, [favourites]);
 
   return (
-    <div>
-      {cocktails &&
-        cocktails.map((cocktail) => (
-          <CocktailItem
-            key={cocktail.idDrink}
-            cocktail={cocktail}
-          />
-        ))}
+    <div style={{ padding: "16px" }}>          
+        <Grid container spacing={2}>
+          {cocktails?.map((cocktail) => (
+            <Grid key={cocktail.idDrink} item xs={12} sm={6} md={4} lg={3}>
+              <CocktailItem cocktail={cocktail} />
+            </Grid>
+          ))}
+        </Grid>
     </div>
   );
 };

@@ -10,7 +10,7 @@ import { FavouritesContext } from "../../context";
 import { Cocktail } from "../../models/cocktail";
 import { CocktailItem } from "../CocktailItem";
 
-export const Nav: React.FC = () => {
+export const Nav= () => {
   const { favourites } = useContext(FavouritesContext);
   const navigate = useNavigate();
   const [randomCocktail, setRandomCocktail] = useState<Cocktail>();
@@ -34,6 +34,8 @@ export const Nav: React.FC = () => {
           width: "100vw",
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
+          zIndex:1,
+          backgroundColor: "",
         }}
       >
         <BottomNavigationAction
@@ -41,7 +43,7 @@ export const Nav: React.FC = () => {
           icon={<QuestionMark/>}
           onClick={handleGetRandomCocktail}
         />
-        {favourites.length > 0 && location.pathname !== "/favourites" ? (
+        {favourites.length > 0 && location.pathname !== "/favourites"? (
           <BottomNavigationAction
             label="Favourites"
             value="favourites"

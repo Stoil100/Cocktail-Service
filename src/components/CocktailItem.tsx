@@ -1,4 +1,4 @@
-import React,{ useState, useContext } from "react";
+import React,{ useContext } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -21,6 +21,7 @@ export const CocktailItem = (props: {cocktail: Cocktail}) => {
   const navigate = useNavigate();
   const { favourites, toggleFavourite } = useContext(FavouritesContext);
   const isFavourited = favourites.includes(props.cocktail.idDrink);
+  console.log(props.cocktail)
 
   const navigateTo = () => {
     navigate(`/${props.cocktail.idDrink}`);
