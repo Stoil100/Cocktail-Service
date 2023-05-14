@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Cocktails } from "../models/cocktail";
-import { CocktailItem } from "./CocktailItem";
+import { CocktailItem } from "../components/CocktailItem";
 
 export const FavouritedPage: React.FC = () => {
   const [cocktails, setCocktails] = useState<Cocktails>();

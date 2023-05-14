@@ -1,13 +1,25 @@
-import React,{useState,useEffect} from "react";
-import { Homepage } from "./components/Homepage";
-import { CocktailItem } from "./components/CocktailItem";
+import React from "react";
+import { Homepage } from "./pages/Homepage";
 import RootLayout from "./components/Root";
-import { createBrowserRouter, Router, RouterProvider } from "react-router-dom";
-import { CocktailPage } from "./components/CocktailPage";
-import { FavouritedPage } from "./components/FavouredPage";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { CocktailPage } from "./pages/CocktailPage";
+import { FavouritedPage } from "./pages/FavouredPage";
+import { createTheme,ThemeProvider } from "@mui/material";
+
+const customTheme = createTheme({
+  palette: {
+    primary: {
+      main: '#1977d2', //blue
+      contrastText: 'white',
+    },
+    secondary: {
+      main: '#f50057',
+      contrastText: 'white',
+    },
+  }
+})
 
 function App() {
-  const[todos,setTodos]=useState<[]>();
   const router = createBrowserRouter([
     {
       path: "/",
@@ -15,14 +27,15 @@ function App() {
       children: [
         { path: "/", element: <Homepage/> },
         { path: "/:cocktailId", element: <CocktailPage/> },
+        { path: "/favourites", element: <FavouritedPage/>},
       ],
     },
   ]);
 
   return (
-    <div>
+    <ThemeProvider theme={customTheme}>
        <RouterProvider router={router} />
-    </div>
+    </ThemeProvider>
   );
 }
 

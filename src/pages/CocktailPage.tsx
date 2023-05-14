@@ -60,7 +60,7 @@ export const CocktailPage: React.FC<{}> = () => {
         <Checkbox
            {...label}
            icon={<FavoriteBorder />}
-           checkedIcon={<Favorite />}
+           checkedIcon={<Favorite color="secondary"/>}
            checked={isFavourited}
            onChange={handleFavouriteChange}
         />

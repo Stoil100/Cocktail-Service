@@ -52,7 +52,7 @@ export const CocktailItem = (props: {cocktail: Cocktail}) => {
         <Checkbox
           {...label}
           icon={<FavoriteBorder />}
-          checkedIcon={<Favorite />}
+          checkedIcon={<Favorite  color="secondary"/>}
           checked={isFavourited}
           onChange={handleFavouriteChange}
         />
