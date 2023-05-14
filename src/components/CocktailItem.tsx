@@ -21,7 +21,6 @@ export const CocktailItem = (props: {cocktail: Cocktail}) => {
   const navigate = useNavigate();
   const { favourites, toggleFavourite } = useContext(FavouritesContext);
   const isFavourited = favourites.includes(props.cocktail.idDrink);
-  console.log(props.cocktail)
 
   const navigateTo = () => {
     navigate(`/${props.cocktail.idDrink}`);

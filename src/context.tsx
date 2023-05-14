@@ -5,16 +5,12 @@ type FavouritesContextType = {
   toggleFavourite: (cocktailId: string) => void;
 };
 
-type Props = {
-  children: ReactNode;
-};
-
 export const FavouritesContext = createContext<FavouritesContextType>({
   favourites: [],
   toggleFavourite: () => {},
 });
 
-export const FavouritesProvider = ({ children }: Props) => {
+export const FavouritesProvider = (props:{children:ReactNode}) => {
   const [favourites, setFavourites] = useState<string[]>(
     JSON.parse(localStorage.getItem("favourites") ?? "[]")
   );
@@ -33,7 +29,7 @@ export const FavouritesProvider = ({ children }: Props) => {
 
   return (
     <FavouritesContext.Provider value={{ favourites, toggleFavourite }}>
-      {children}
+      {props.children}
     </FavouritesContext.Provider>
   );
 };

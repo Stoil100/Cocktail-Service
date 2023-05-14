@@ -16,7 +16,6 @@ export const Nav= () => {
   const [randomCocktail, setRandomCocktail] = useState<Cocktail>();
   const [isCocktailDisplayed, setIsCocktailDisplayed] = useState(false);
   const location = useLocation();
-  console.log(location.pathname);
 
   const handleGetRandomCocktail = async () => {
     const data = await fetch(
