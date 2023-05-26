@@ -48,24 +48,31 @@ export const CocktailPage = () => {
   const [cocktail, setCocktail] = useState<Cocktail>();
   const id = useParams();
   const { favourites, toggleFavourite } = useContext(FavouritesContext);
-  const isFavourited = favourites.includes(id.cocktailId!);
-
+  const [isFavourited, setIsFavourited] = useState(false);
   const fetchData = useCallback(async () => {
-    const response = await fetch(
+    const data = await fetch(
       `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id.cocktailId}`
-    );
-    const data = await response.json();
+    ).then((response) => response.json());
     setCocktail(data.drinks[0]);
   }, []);
-  
+
   useEffect(() => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    setIsFavourited(
+      favourites.some((favourite) =>
+        Object.values(favourite).includes(cocktail?.idDrink)
+      )
+    );
+  }, [cocktail, favourites]);
+
   const handleFavouriteChange = () => {
-    toggleFavourite(id.cocktailId!);
+    toggleFavourite(cocktail!);
   };
 
+  console.log(isFavourited);
   return (
     <Container>
       <StyledCard>

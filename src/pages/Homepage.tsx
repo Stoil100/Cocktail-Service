@@ -10,7 +10,6 @@ export const Homepage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
-
   const fetchData = useCallback(async()=>{
     const data = await fetch(
       `https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Alcoholic`

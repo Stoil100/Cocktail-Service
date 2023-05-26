@@ -1,4 +1,4 @@
-import React,{ useContext } from "react";
+import React, { useContext, useMemo } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -17,17 +17,28 @@ const StyledCard = styled(Card)`
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
-export const CocktailItem = (props: {cocktail: Cocktail}) => {
+export const CocktailItem = (props: { cocktail: Cocktail }) => {
   const navigate = useNavigate();
   const { favourites, toggleFavourite } = useContext(FavouritesContext);
-  const isFavourited = favourites.includes(props.cocktail.idDrink);
+
+  const checkIsFavourited = () => {
+    const exists = favourites.some((favourite) =>
+      Object.values(favourite).includes(props.cocktail.idDrink)
+    );
+    if (exists) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  const isFavourited = useMemo(() => checkIsFavourited(), [favourites]);
 
   const navigateTo = () => {
     navigate(`/${props.cocktail.idDrink}`);
   };
 
   const handleFavouriteChange = () => {
-    toggleFavourite(props.cocktail.idDrink);
+    toggleFavourite(props.cocktail);
   };
 
   return (
@@ -52,7 +63,7 @@ export const CocktailItem = (props: {cocktail: Cocktail}) => {
         <Checkbox
           {...label}
           icon={<FavoriteBorder />}
-          checkedIcon={<Favorite  color="secondary"/>}
+          checkedIcon={<Favorite color="secondary" />}
           checked={isFavourited}
           onChange={handleFavouriteChange}
         />
