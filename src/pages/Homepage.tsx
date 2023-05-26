@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { CocktailItem } from "../components/CocktailItem";
 import { Cocktails } from "../models/cocktail";
 import { Backdrop, Grid, TextField, Typography } from "@mui/material";
@@ -10,13 +10,15 @@ export const Homepage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
+
+  const fetchData = useCallback(async()=>{
+    const data = await fetch(
+      `https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Alcoholic`
+    ).then((response) => response.json());
+    setCocktails(data.drinks);
+  },[])
+
   useEffect(() => {
-    async function fetchData() {
-      const data = await fetch(
-        `https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Alcoholic`
-      ).then((response) => response.json());
-      setCocktails(data.drinks);
-    }
     fetchData();
   }, []);
 

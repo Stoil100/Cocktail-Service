@@ -1,5 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Checkbox, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
+import React, { useState, useEffect, useContext, useCallback } from "react";
+import {
+  Checkbox,
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Typography,
+} from "@mui/material";
 import { FavoriteBorder, Favorite } from "@mui/icons-material";
 import styled from "@emotion/styled";
 import { useParams } from "react-router-dom";
@@ -7,12 +15,12 @@ import { Cocktail } from "../models/cocktail";
 import { FavouritesContext } from "../context";
 
 const StyledCard = styled(Card)`
-  width:100%;
-  border-radius:0;
+  width: 100%;
+  border-radius: 0;
 `;
 
 const Container = styled.div`
-  width:100vw;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,7 +28,7 @@ const Container = styled.div`
 `;
 
 const Image = styled(CardMedia)`
-  height:500px;
+  height: 500px;
 `;
 
 const Title = styled(Typography)`
@@ -41,15 +49,16 @@ export const CocktailPage = () => {
   const id = useParams();
   const { favourites, toggleFavourite } = useContext(FavouritesContext);
   const isFavourited = favourites.includes(id.cocktailId!);
+
+  const fetchData = useCallback(async () => {
+    const response = await fetch(
+      `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id.cocktailId}`
+    );
+    const data = await response.json();
+    setCocktail(data.drinks[0]);
+  }, []);
   
   useEffect(() => {
-    async function fetchData() {
-      const response = await fetch(
-        `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id.cocktailId}`
-      );
-      const data = await response.json();
-      setCocktail(data.drinks[0]);
-    }
     fetchData();
   }, []);
 
@@ -61,15 +70,13 @@ export const CocktailPage = () => {
     <Container>
       <StyledCard>
         <CardActionArea>
-        <CardContent>
-            <Title variant="h5" >
-              {cocktail?.strDrink}
-            </Title>
+          <CardContent>
+            <Title variant="h5">{cocktail?.strDrink}</Title>
             <Description variant="body2" color="text.secondary">
               {cocktail?.strInstructions}
             </Description>
           </CardContent>
-          <Image  image={cocktail?.strDrinkThumb} />
+          <Image image={cocktail?.strDrinkThumb} />
         </CardActionArea>
         <CardActions>
           <Checkbox
