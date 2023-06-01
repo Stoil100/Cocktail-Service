@@ -71,8 +71,7 @@ export const CocktailPage = () => {
   const handleFavouriteChange = () => {
     toggleFavourite(cocktail!);
   };
-
-  console.log(isFavourited);
+  
   return (
     <Container>
       <StyledCard>

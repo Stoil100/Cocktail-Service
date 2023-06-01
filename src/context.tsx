@@ -22,12 +22,10 @@ export const FavouritesProvider = (props: { children: ReactNode }) => {
 
   const toggleFavourite = (cocktail: Cocktail) => {
     if(favourites.length===0){
-      console.log(cocktail)
       setFavourites([...favourites, cocktail]);
     }
     else{
     favourites.map((favourite) => {
-      console.log("hello")
       if (favourite?.idDrink === cocktail.idDrink) {
         setFavourites(
           favourites.filter(
@@ -35,13 +33,11 @@ export const FavouritesProvider = (props: { children: ReactNode }) => {
           )
         );
       } else {
-        console.log(favourite,0)
         setFavourites([...favourites, cocktail]);
       }
     });
   }
   };
-  console.log(favourites)
 
   return (
     <FavouritesContext.Provider value={{ favourites, toggleFavourite }}>
