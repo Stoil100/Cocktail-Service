@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from "react";
+import React, { useCallback, useContext, useMemo } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -21,7 +21,7 @@ export const CocktailItem = (props: { cocktail: Cocktail }) => {
   const navigate = useNavigate();
   const { favourites, toggleFavourite } = useContext(FavouritesContext);
 
-  const checkIsFavourited = () => {
+  const checkIsFavourited = useCallback(() => {
     const exists = favourites.some((favourite) =>
       Object.values(favourite).includes(props.cocktail.idDrink)
     );
@@ -30,8 +30,9 @@ export const CocktailItem = (props: { cocktail: Cocktail }) => {
     } else {
       return false;
     }
-  };
-  const isFavourited = useMemo(() => checkIsFavourited(), [favourites]);
+  }, [favourites, props.cocktail.idDrink]);
+
+  const isFavourited = useMemo(() => checkIsFavourited(), [checkIsFavourited]);
 
   const navigateTo = () => {
     navigate(`/${props.cocktail.idDrink}`);

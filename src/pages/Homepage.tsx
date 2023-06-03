@@ -10,16 +10,16 @@ export const Homepage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
-  const fetchData = useCallback(async()=>{
+  const fetchData = useCallback(async () => {
     const data = await fetch(
       `https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Alcoholic`
     ).then((response) => response.json());
     setCocktails(data.drinks);
-  },[])
+  }, []);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -43,7 +43,7 @@ export const Homepage = () => {
   return (
     <div style={{ padding: "16px" }}>
       <TextField
-        style={{ marginBottom: "16px", }}
+        style={{ marginBottom: "16px" }}
         fullWidth
         variant="filled"
         color="primary"
@@ -52,15 +52,12 @@ export const Homepage = () => {
         onChange={handleSearch}
       />
       <InfiniteScroll
-        dataLength={currentPage *20}
+        dataLength={currentPage * 20}
         hasMore={hasMore}
         next={loadMore}
-        loader={<Backdrop open={false}
-         />}
-         endMessage={
-          <Typography color="white"> That's all! </Typography>
-        }>
-          
+        loader={<Backdrop open={false} />}
+        endMessage={<Typography color="white"> That's all! </Typography>}
+      >
         <Grid container spacing={2}>
           {filteredCocktails.slice(0, currentPage * 20).map((cocktail) => (
             <Grid key={cocktail.idDrink} item xs={12} sm={6} md={4} lg={3}>

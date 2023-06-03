@@ -5,16 +5,17 @@ import {
   Backdrop,
 } from "@mui/material";
 import { Favorite, Home, QuestionMark,} from "@mui/icons-material";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation,useParams } from "react-router-dom";
 import { FavouritesContext } from "../../context";
 import { Cocktail } from "../../models/cocktail";
 import { CocktailItem } from "../CocktailItem";
 
 export const Nav= () => {
   const { favourites } = useContext(FavouritesContext);
-  const navigate = useNavigate();
   const [randomCocktail, setRandomCocktail] = useState<Cocktail>();
   const [isCocktailDisplayed, setIsCocktailDisplayed] = useState(false);
+  const navigate = useNavigate();
+  const params = useParams();
   const location = useLocation();
 
   const handleGetRandomCocktail = async () => {
@@ -42,7 +43,7 @@ export const Nav= () => {
           icon={<QuestionMark/>}
           onClick={handleGetRandomCocktail}
         />
-        {favourites.length > 0 && location.pathname !== "/favourites"? (
+        {favourites.length > 0 && location.pathname !== "/favourites" && params.cocktailId===undefined? (
           <BottomNavigationAction
             label="Favourites"
             value="favourites"

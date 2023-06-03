@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Cocktails } from "../models/cocktail";
 import { CocktailItem } from "../components/CocktailItem";
 import { Grid, Typography } from "@mui/material";
@@ -6,7 +6,7 @@ import { Grid, Typography } from "@mui/material";
 export const FavouritedPage = () => {
   const [cocktails, setCocktails] = useState<Cocktails>([]);
   const [isNotTheSame, setIsNotTheSame] = useState(false);
-  const [favourites, setFavourites] = useState<Cocktails>(
+  const [favourites] = useState<Cocktails>(
     JSON.parse(localStorage.getItem("favourites") ?? "[]")
   );
 

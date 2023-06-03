@@ -42,23 +42,22 @@ const Description = styled(Typography)`
   text-align: center;
 `;
 
-const label = { inputProps: { "aria-label": "Checkbox demo" } };
-
 export const CocktailPage = () => {
   const [cocktail, setCocktail] = useState<Cocktail>();
   const id = useParams();
   const { favourites, toggleFavourite } = useContext(FavouritesContext);
   const [isFavourited, setIsFavourited] = useState(false);
+
   const fetchData = useCallback(async () => {
     const data = await fetch(
       `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id.cocktailId}`
     ).then((response) => response.json());
     setCocktail(data.drinks[0]);
-  }, []);
+  }, [id.cocktailId]);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   useEffect(() => {
     setIsFavourited(
@@ -71,7 +70,7 @@ export const CocktailPage = () => {
   const handleFavouriteChange = () => {
     toggleFavourite(cocktail!);
   };
-  
+
   return (
     <Container>
       <StyledCard>
