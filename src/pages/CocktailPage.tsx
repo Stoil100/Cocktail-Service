@@ -7,6 +7,7 @@ import {
   CardContent,
   CardMedia,
   Typography,
+  Button
 } from "@mui/material";
 import { FavoriteBorder, Favorite } from "@mui/icons-material";
 import styled from "@emotion/styled";
@@ -15,20 +16,21 @@ import { Cocktail } from "../models/cocktail";
 import { FavouritesContext } from "../context";
 
 const StyledCard = styled(Card)`
-  width: 100%;
+  display: flex;
   border-radius: 0;
+  width:90%;
 `;
 
-const Container = styled.div`
-  width: 100vw;
+const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 2rem;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1rem;
 `;
 
-const Image = styled(CardMedia)`
-  height: 500px;
+const ImageContainer = styled.div`
+  width: 500px;
 `;
 
 const Title = styled(Typography)`
@@ -72,26 +74,30 @@ export const CocktailPage = () => {
   };
 
   return (
-    <Container>
+    <div style={{height:"90vh",display:"flex",justifyContent:"center",alignItems:"center"}}>
       <StyledCard>
-        <CardActionArea>
+        <ImageContainer>
+          <CardMedia component="img" image={cocktail?.strDrinkThumb} />
+        </ImageContainer>
+        <ContentContainer>
           <CardContent>
             <Title variant="h5">{cocktail?.strDrink}</Title>
             <Description variant="body2" color="text.secondary">
               {cocktail?.strInstructions}
             </Description>
           </CardContent>
-          <Image image={cocktail?.strDrinkThumb} />
-        </CardActionArea>
-        <CardActions>
-          <Checkbox
-            icon={<FavoriteBorder />}
-            checkedIcon={<Favorite color="secondary" />}
-            checked={isFavourited}
-            onChange={handleFavouriteChange}
-          />
-        </CardActions>
+          <CardActions>
+          <Button
+            variant="contained"
+            color="secondary"
+            startIcon={isFavourited ? <Favorite /> : <FavoriteBorder />}
+            onClick={handleFavouriteChange}
+          >
+            {isFavourited ? "Remove from Favorites" : "Add to Favorites"}
+          </Button>
+          </CardActions>
+        </ContentContainer>
       </StyledCard>
-    </Container>
+    </div>
   );
 };

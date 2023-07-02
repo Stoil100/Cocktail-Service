@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Cocktails } from "../models/cocktail";
 import { CocktailItem } from "../components/CocktailItem";
 import { Grid, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export const FavouritedPage = () => {
+  const navigate = useNavigate();
   const [cocktails, setCocktails] = useState<Cocktails>([]);
   const [isNotTheSame, setIsNotTheSame] = useState(false);
   const [favourites] = useState<Cocktails>(
@@ -23,6 +25,9 @@ export const FavouritedPage = () => {
       setCocktails(cocktailData);
     };
     getCocktails();
+    if(favourites.length === 0){
+      navigate("/");
+    };
   }, [favourites]);
 
   useEffect(() => {
