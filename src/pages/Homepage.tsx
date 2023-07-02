@@ -39,12 +39,11 @@ export const Homepage = () => {
   };
 
   return (
-    <div style={{ padding: "16px" }}>
+    <div style={{ padding: "16px",display:"flex", alignItems:"center", flexDirection:"column" }}>
       <TextField
-        style={{ marginBottom: "16px" }}
+        sx={{ marginBottom: "16px", backgroundColor: "#fff", borderRadius:"10px"}}
         fullWidth
         variant="filled"
-        color="primary"
         size="small"
         placeholder="Search cocktails..."
         onChange={handleSearch}
@@ -55,10 +54,11 @@ export const Homepage = () => {
         next={loadMore}
         loader={<Backdrop open={false} />}
         endMessage={<Typography color="white"> That's all! </Typography>}
+        style={{width:"75vw",}}
       >
-        <Grid container spacing={2}>
+        <Grid container spacing={3}>
           {cocktails!==null && cocktails.slice(0, currentPage * 20).map((cocktail) => (
-            <Grid key={cocktail.idDrink} item xs={12} sm={6} md={4} lg={3}>
+            <Grid key={cocktail.idDrink} item xs={4}>
               <CocktailItem cocktail={cocktail} />
             </Grid>
           ))}

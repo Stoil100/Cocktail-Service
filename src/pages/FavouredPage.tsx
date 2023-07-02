@@ -44,9 +44,9 @@ export const FavouritedPage = () => {
 
   return (
     <div style={{ padding: "16px" }}>
-      <Grid container spacing={2}>
+      <Grid container spacing={3}>
         {favourites?.map((favourite) => (
-          <Grid key={favourite.idDrink} item xs={12} sm={6} md={4} lg={3}>
+          <Grid key={favourite.idDrink} item xs={4}>
             <CocktailItem cocktail={favourite} />
           </Grid>
         ))}

@@ -2,13 +2,11 @@ import React, { useCallback, useContext, useMemo } from "react";
 import { FavoriteBorder, Favorite, InfoRounded } from "@mui/icons-material";
 import {
   CardActionArea,
-  CardActions,
   Button,
   Typography,
   CardMedia,
   CardContent,
   Card,
-  Checkbox,
 } from "@mui/material";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
@@ -46,8 +44,6 @@ const ButtonContainer = styled.div`
   gap:10px;
 `;
 
-const label = { inputProps: { "aria-label": "Checkbox demo" } };
-
 export const CocktailItem = (props: { cocktail: Cocktail }) => {
   const navigate = useNavigate();
   const { favourites, toggleFavourite } = useContext(FavouritesContext);
@@ -75,7 +71,7 @@ export const CocktailItem = (props: { cocktail: Cocktail }) => {
 
   return (
     <StyledCard>
-      <CardActionArea onClick={navigateTo}>
+      <CardActionArea>
         <CardMedia
           component="img"
           height="250"
