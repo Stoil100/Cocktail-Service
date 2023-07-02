@@ -1,18 +1,49 @@
 import React, { useCallback, useContext, useMemo } from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import { Checkbox } from "@mui/material";
-import { FavoriteBorder, Favorite } from "@mui/icons-material";
-import { CardActionArea, CardActions } from "@mui/material";
+import { FavoriteBorder, Favorite, InfoRounded } from "@mui/icons-material";
+import {
+  CardActionArea,
+  CardActions,
+  Button,
+  Typography,
+  CardMedia,
+  CardContent,
+  Card,
+  Checkbox,
+} from "@mui/material";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
 import { FavouritesContext } from "../context";
 import { Cocktail } from "../models/cocktail";
 
 const StyledCard = styled(Card)`
-  max-width: 345px;
+  position: relative;
+  max-width: 33vw;
+`;
+const ImageOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 1;
+  }
+`;
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  gap:10px;
 `;
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
@@ -47,7 +78,7 @@ export const CocktailItem = (props: { cocktail: Cocktail }) => {
       <CardActionArea onClick={navigateTo}>
         <CardMedia
           component="img"
-          height="140"
+          height="250"
           image={props.cocktail.strDrinkThumb}
           alt="cocktail image"
         />
@@ -55,20 +86,28 @@ export const CocktailItem = (props: { cocktail: Cocktail }) => {
           <Typography gutterBottom variant="h5" component="div">
             {props.cocktail.strDrink}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {props.cocktail.strInstructions}
-          </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Checkbox
-          {...label}
-          icon={<FavoriteBorder />}
-          checkedIcon={<Favorite color="secondary" />}
-          checked={isFavourited}
-          onChange={handleFavouriteChange}
-        />
-      </CardActions>
+      <ImageOverlay>
+        <ButtonContainer>
+          <Button
+            variant="contained"
+            color="secondary"
+            startIcon={isFavourited ? <Favorite /> : <FavoriteBorder />}
+            onClick={handleFavouriteChange}
+          >
+            {isFavourited ? "Remove from Favorites" : "Add to Favorites"}
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<InfoRounded />}
+            onClick={navigateTo}
+          >
+            More Info
+          </Button>
+        </ButtonContainer>
+      </ImageOverlay>
     </StyledCard>
   );
 };
