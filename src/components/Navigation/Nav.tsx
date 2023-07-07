@@ -29,13 +29,14 @@ export const Nav= () => {
     <>
       <BottomNavigation
         sx={{
+          backgroundColor:"#fefefe",
           position: "fixed",
           bottom: 0,
           width: "100vw",
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
           zIndex:1,
-          backgroundColor: "",
+          boxShadow: 20,
         }}
       >
         <BottomNavigationAction

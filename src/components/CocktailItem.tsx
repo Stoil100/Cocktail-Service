@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useMemo } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { FavoriteBorder, Favorite, InfoRounded } from "@mui/icons-material";
 import {
   CardActionArea,
@@ -23,8 +23,8 @@ const ImageOverlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(5px);
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(3px);
   opacity: 0;
   display: flex;
   flex-direction: column;
@@ -38,35 +38,38 @@ const ImageOverlay = styled.div`
 `;
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  gap:10px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 export const CocktailItem = (props: { cocktail: Cocktail }) => {
   const navigate = useNavigate();
   const { favourites, toggleFavourite } = useContext(FavouritesContext);
+  const [isFavourited, setIsFavourited] = useState(false);
 
-  const checkIsFavourited = useCallback(() => {
-    const exists = favourites.some((favourite) =>
+  useEffect(() => {
+    setIsFavourited(() => {
+      const exists = favourites.some((favourite) =>
       Object.values(favourite).includes(props.cocktail.idDrink)
-    );
-    if (exists) {
-      return true;
-    } else {
-      return false;
-    }
+      );
+      if (exists) {
+        console.log("exists")
+        return true;
+      } else {
+        console.log("doesn't exist")
+        return false;
+      }
+    });
   }, [favourites, props.cocktail.idDrink]);
-
-  const isFavourited = useMemo(() => checkIsFavourited(), [checkIsFavourited]);
 
   const navigateTo = () => {
     navigate(`/${props.cocktail.idDrink}`);
   };
 
-  const handleFavouriteChange = () => {
-    toggleFavourite(props.cocktail);
+  const handleFavouriteChange = async () => {
+    await toggleFavourite(props.cocktail);
   };
 
   return (

@@ -12,31 +12,29 @@ export const FavouritesContext = createContext<FavouritesContextType>({
 });
 
 export const FavouritesProvider = (props: { children: ReactNode }) => {
-  const [favourites, setFavourites] = useState<Cocktails | []>(
-    JSON.parse(localStorage.getItem("favourites") ?? "[]")
-  );
+  const [favourites, setFavourites] = useState<Cocktails>(() => {
+    const storedFavourites = localStorage.getItem("favourites");
+    return storedFavourites ? JSON.parse(storedFavourites) : [];
+  });
 
   useEffect(() => {
     localStorage.setItem("favourites", JSON.stringify(favourites));
   }, [favourites]);
 
   const toggleFavourite = (cocktail: Cocktail) => {
-    if(favourites.length===0){
-      setFavourites([...favourites, cocktail]);
-    }
-    else{
-    favourites.map((favourite) => {
-      if (favourite?.idDrink === cocktail.idDrink) {
-        setFavourites(
-          favourites.filter(
-            (favourite) => favourite.idDrink !== cocktail.idDrink
-          )
+    setFavourites((prevFavourites) => {
+      const isFavourite = prevFavourites.some(
+        (favourite) => favourite.idDrink === cocktail.idDrink
+      );
+
+      if (isFavourite) {
+        return prevFavourites.filter(
+          (favourite) => favourite.idDrink !== cocktail.idDrink
         );
       } else {
-        setFavourites([...favourites, cocktail]);
+        return [...prevFavourites, cocktail];
       }
     });
-  }
   };
 
   return (
