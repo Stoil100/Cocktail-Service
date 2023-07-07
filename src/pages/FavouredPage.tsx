@@ -32,7 +32,9 @@ export const FavouritedPage = () => {
         })
       );
 
-      const filteredCocktails = cocktailData.filter((cocktail) => cocktail !== null);
+      const filteredCocktails = cocktailData.filter(
+        (cocktail) => cocktail !== null
+      );
       setCocktails(filteredCocktails);
     };
 
@@ -47,12 +49,10 @@ export const FavouritedPage = () => {
         cocktails.length === favourites.length
       ) {
         for (let i = 0; i < favourites.length; i++) {
-          const fav = favourites[i];
-          const cocktail = cocktails[i];
           if (
-            fav.idDrink !== cocktail.idDrink ||
-            fav.strDrink !== cocktail.strDrink ||
-            fav.strDrinkThumb !== cocktail.strDrinkThumb
+            favourites[i].idDrink !== cocktails[i].idDrink ||
+            favourites[i].strDrink !== cocktails[i].strDrink ||
+            favourites[i].strDrinkThumb !== cocktails[i].strDrinkThumb
           ) {
             setIsNotTheSame(true);
             return;
@@ -61,7 +61,6 @@ export const FavouritedPage = () => {
         setIsNotTheSame(false);
       }
     };
-
     checkSimilarity();
   }, [favourites, cocktails]);
 

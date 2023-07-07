@@ -50,26 +50,18 @@ export const CocktailItem = (props: { cocktail: Cocktail }) => {
   const [isFavourited, setIsFavourited] = useState(false);
 
   useEffect(() => {
-    setIsFavourited(() => {
-      const exists = favourites.some((favourite) =>
-      Object.values(favourite).includes(props.cocktail.idDrink)
-      );
-      if (exists) {
-        console.log("exists")
-        return true;
-      } else {
-        console.log("doesn't exist")
-        return false;
-      }
-    });
+    const exists = favourites.some(
+      (favourite) => favourite.idDrink === props.cocktail.idDrink
+    );
+    setIsFavourited(exists);
   }, [favourites, props.cocktail.idDrink]);
 
   const navigateTo = () => {
     navigate(`/${props.cocktail.idDrink}`);
   };
 
-  const handleFavouriteChange = async () => {
-    await toggleFavourite(props.cocktail);
+  const handleFavouriteChange = () => {
+    toggleFavourite(props.cocktail);
   };
 
   return (
