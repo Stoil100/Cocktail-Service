@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext, useCallback } from "react";
 import {
-  Checkbox,
   Card,
-  CardActionArea,
   CardActions,
   CardContent,
   CardMedia,

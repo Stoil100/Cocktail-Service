@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { CocktailItem } from "../components/CocktailItem";
 import { Cocktails } from "../models/cocktail";
-import { Backdrop, Grid, TextField, Typography } from "@mui/material";
+import { Grid, TextField, Typography } from "@mui/material";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Loader } from "../components/Loader";
 
