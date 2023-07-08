@@ -3,6 +3,7 @@ import { CocktailItem } from "../components/CocktailItem";
 import { Cocktails } from "../models/cocktail";
 import { Backdrop, Grid, TextField, Typography } from "@mui/material";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { Loader } from "../components/Loader";
 
 export const Homepage = () => {
   const [cocktails, setCocktails] = useState<Cocktails>([]);
@@ -52,7 +53,7 @@ export const Homepage = () => {
         dataLength={currentPage * 20}
         hasMore={hasMore}
         next={loadMore}
-        loader={<Backdrop open={false} />}
+        loader={<Loader isOpen={!hasMore}/>}
         endMessage={<Typography color="white"> That's all! </Typography>}
         style={{width:"75vw",}}
       >

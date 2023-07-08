@@ -3,14 +3,20 @@ import {
   BottomNavigation,
   BottomNavigationAction,
   Backdrop,
+  Button,
 } from "@mui/material";
-import { Favorite, Home, QuestionMark,} from "@mui/icons-material";
-import { useNavigate, useLocation,useParams } from "react-router-dom";
-import { FavouritesContext } from "../../context";
-import { Cocktail } from "../../models/cocktail";
-import { CocktailItem } from "../CocktailItem";
+import {
+  CloseOutlined,
+  Favorite,
+  Home,
+  QuestionMark,
+} from "@mui/icons-material";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { FavouritesContext } from "../context";
+import { Cocktail } from "../models/cocktail";
+import { CocktailItem } from "./CocktailItem";
 
-export const Nav= () => {
+export const Nav = () => {
   const { favourites } = useContext(FavouritesContext);
   const [randomCocktail, setRandomCocktail] = useState<Cocktail>();
   const [isCocktailDisplayed, setIsCocktailDisplayed] = useState(false);
@@ -29,22 +35,24 @@ export const Nav= () => {
     <>
       <BottomNavigation
         sx={{
-          backgroundColor:"#fefefe",
+          backgroundColor: "#fefefe",
           position: "fixed",
           bottom: 0,
           width: "100vw",
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
-          zIndex:1,
+          zIndex: 1,
           boxShadow: 20,
         }}
       >
         <BottomNavigationAction
           value="add"
-          icon={<QuestionMark/>}
+          icon={<QuestionMark />}
           onClick={handleGetRandomCocktail}
         />
-        {favourites.length > 0 && location.pathname !== "/favourites" && params.cocktailId===undefined? (
+        {favourites.length > 0 &&
+        location.pathname !== "/favourites" &&
+        params.cocktailId === undefined ? (
           <BottomNavigationAction
             label="Favourites"
             value="favourites"
@@ -66,16 +74,27 @@ export const Nav= () => {
       </BottomNavigation>
       {isCocktailDisplayed && (
         <Backdrop
-          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open
-          onClick={() => {
-            setIsCocktailDisplayed(false);
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "5px",
+            color: "#fff",
+            zIndex: (theme) => theme.zIndex.drawer + 1,
           }}
+          open
         >
           <CocktailItem
             key={randomCocktail!.idDrink}
             cocktail={randomCocktail!}
           />
+          <Button
+            variant="contained"
+            onClick={() => {
+              setIsCocktailDisplayed(false);
+            }}
+          >
+            <CloseOutlined />
+          </Button>
         </Backdrop>
       )}
     </>
